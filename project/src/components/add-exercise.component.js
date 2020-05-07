@@ -19,6 +19,7 @@ export default class CreateExercise extends Component {
             description: '',
             numOfReps: '',
             url: '',
+            image: null,
             date: new Date()
         }
     }
@@ -42,6 +43,7 @@ export default class CreateExercise extends Component {
         this.setState({
             url: e.target.value
         });
+        console.log(this.state.url)
     }
 
     
@@ -50,6 +52,13 @@ export default class CreateExercise extends Component {
             date: date
         });
     }
+    onChangeImage = event =>{
+        this.setState({
+            image: event.target.files[0]
+        })
+        
+    }
+
     onSubmit(e) {
         e.preventDefault();
 
@@ -61,12 +70,22 @@ export default class CreateExercise extends Component {
             url: this.state.url,
             date: this.state.date
         }
+        let formdata = new FormData()
 
+        formdata.append ('routineID', this.props.match.params.id)
+        formdata.append ('name', this.state.name)
+        formdata.append ('description',this.state.description)
+        formdata.append ('numOfReps',this.state.numOfReps)
+        formdata.append ('url', this.state.url)
+        formdata.append ('image', this.state.image)
+        formdata.append ('date', this.state.date)
+
+        console.log(this.state.image);
         console.log(exercise);
-        axios.post('http://localhost:5000/exercise/add', exercise)
+        axios.post('http://localhost:5000/exercise/add', formdata)
             .then(res => console.log(res.data));
 
-        window.location = '/';
+        
     }
 
 render() {
@@ -113,7 +132,14 @@ render() {
                         onChange={this.onChangeUrl}
                     />
                 </div>
-                
+                <div className="form-group">
+                    <label>Image </label>
+                    <input
+                        type="file"
+                        onChange={this.onChangeImage}
+                    />
+                   
+                </div>
                 <div className="form-group">
                     <label>Date: </label>
                     <div>

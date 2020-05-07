@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 const Routine = props => (
     <tr>
         <td>{props.routine.username}</td>
         <td>{props.routine.routineName}</td>
         <td className="overflowing">{props.routine.description}</td>
-        <td>{props.routine.url}</td>
         <td>{props.routine.date.substring(0,10)}</td>
         <td>
         <Link to={"/add_exercise/"+props.routine._id}>add exercises</Link> |<Link to={"/edit/"+props.routine._id}>edit</Link> | <a href="#" onClick={() => {props.deleteRoutine(props.routine._id)}}>delete</a></td>
     </tr>
 )
 
-export default class RoutinesList extends Component {
+class RoutinesList extends Component {
     constructor(props) {
         super(props);
 
@@ -23,8 +24,13 @@ export default class RoutinesList extends Component {
         this.state = {routines: []};
     }
 
+    static propTypes = {
+        auth: PropTypes.object.isRequired
+    }
+
     componentDidMount() {
-        axios.get('http://localhost:5000/routines/')
+        console.log(this.props.auth.user.username)
+        axios.get('http://localhost:5000/routines/myRoutine/'+ this.props.auth.user.username)
             .then(res => {
                 this.setState({ routines: res.data })
             })
@@ -55,7 +61,6 @@ export default class RoutinesList extends Component {
                             <th>Username</th>
                             <th>Routine Name</th>
                             <th>Description</th>
-                            <th>URL</th>
                             <th>Date</th>
                             <th>Actions</th>
                         </tr>
@@ -68,3 +73,9 @@ export default class RoutinesList extends Component {
         )
     }
 }
+
+const mapStateToProps = state =>({
+    auth: state.auth
+});
+
+export default connect(mapStateToProps, null)(RoutinesList);

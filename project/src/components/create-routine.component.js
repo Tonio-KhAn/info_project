@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-export default class CreateRoutine extends Component {
+class CreateRoutine extends Component {
     constructor(props) {
         super(props);
 
-        this.onChangeUsername = this.onChangeUsername.bind(this);
         this.onChangeRoutineName = this.onChangeRoutineName.bind(this);
         this.onChangeDescription = this.onChangeDescription.bind(this);
         this.onChangeDate = this.onChangeDate.bind(this);
@@ -21,11 +22,11 @@ export default class CreateRoutine extends Component {
         }
     }
 
-    onChangeUsername(e) {
-        this.setState({
-            username: e.target.value
-        });
+    static propTypes = {
+        auth: PropTypes.object.isRequired
     }
+
+    
     onChangeRoutineName(e) {
         this.setState({
             routineName: e.target.value
@@ -46,7 +47,7 @@ export default class CreateRoutine extends Component {
         e.preventDefault();
 
         const routine = {
-            username: this.state.username,
+            username: this.props.auth.user.username,
             routineName: this.state.routineName,
             description: this.state.description,
             date: this.state.date
@@ -55,8 +56,6 @@ export default class CreateRoutine extends Component {
         console.log(routine);
         axios.post('http://localhost:5000/routines/add', routine)
             .then(res => console.log(res.data));
-
-        window.location = '/';
     }
 
     render() {
@@ -64,16 +63,7 @@ export default class CreateRoutine extends Component {
             <div>
                 <h3>Create New Routine</h3>
                 <form onSubmit={this.onSubmit}>
-                    <div className="form-group">
-                        <label>Username: </label>
-                        <input
-                            type="text"
-                            required className="form-control"
-                            placeholder="username"
-                            value={this.state.username}
-                            onChange={this.onChangeUsername}
-                        />
-                    </div>
+                    
                     <div className="form-group">
                         <label>Routine Name: </label>
                         <input
@@ -116,3 +106,10 @@ export default class CreateRoutine extends Component {
         )
     }
 }
+
+
+const mapStateToProps = state =>({
+    auth: state.auth
+});
+
+export default connect(mapStateToProps, null)(CreateRoutine);

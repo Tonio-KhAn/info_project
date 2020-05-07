@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import {register} from '../actions/authActions';
+import { create } from 'domain';
 
-export default class CreateUser extends Component {
+class CreateUser extends Component {
     constructor(props) {
         super(props);
 
@@ -13,7 +17,21 @@ export default class CreateUser extends Component {
         this.state = {
             username: '',
             email: '',
-            password: ''
+            password: '',
+            msg: null
+        }
+    }
+
+    static propTypes = {
+        isAuthenticated: PropTypes.bool,
+        error: PropTypes.object.isRequired,
+        register:PropTypes.func.isRequired
+    }; 
+
+    componentDidUpdate(prevProps){
+        const {isAuthenticated} = this.props;
+        if (isAuthenticated){
+            window.location = '';
         }
     }
 
@@ -34,18 +52,18 @@ export default class CreateUser extends Component {
     }
     onSubmit(e) {
         e.preventDefault();
+            const {username, email, password} = this.state;
 
-        const user = {
-            username: this.state.username,
-            email: this.state.email,
-            password: this.state.password
-        }
+            const newUser= {
+                username, 
+                email, 
+                password
+            };
 
-        console.log(user);
-        axios.post('http://localhost:5000/users/add', user)
-            .then(res => console.log(res.data));
-
-        window.location = '/create';
+            this.props.register(newUser);
+            
+            
+        
     }
 
     render() {
@@ -95,3 +113,13 @@ export default class CreateUser extends Component {
         )
     }
 }
+
+const mapStateToProps = state =>({
+    isAuthenticated: state.auth.isAuthenticated,
+    error:state.error
+}); 
+
+export default connect(
+    mapStateToProps,
+    {register})
+    (CreateUser);

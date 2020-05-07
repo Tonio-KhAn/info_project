@@ -1,5 +1,8 @@
 const router = require('express').Router();
+const auth = require('../middleware/auth');
 let Routine = require('../models/routine.model');
+
+
 
 router.route('/').get((req, res) => {
     Routine.find()
@@ -27,13 +30,19 @@ router.route('/:id').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/:id').delete((req, res) => {
+router.route("/myRoutine/:id").get((req, res) => {
+    Routine.find({"username": req.params.id })
+      .then(routine => res.json(routine))
+      .catch(err => res.status(400).json("Error: " + err));
+  });
+
+router.route('/:id').delete(auth, (req, res) => {
     Routine.findByIdAndDelete(req.params.id)
     .then(() => res.json('Routine deleted.'))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/update/:id').put((req, res) => {
+router.route('/update/:id').put(auth, (req, res) => {
     Routine.findById(req.params.id)
     .then(routine => {
         routine.username = req.body.username;

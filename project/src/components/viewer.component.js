@@ -3,16 +3,21 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const Routine = props => (
-    <div>
+    <div className="viewerDiv">
     <div className="topviewer">
         {props.routine.name} 
     </div>
     <div className="imageholder">
     <div className="imageviewer">
+    <img src={props.routine.image} alt="image" className="image" ></img>
     </div>
     </div>
     <div className="bottomviewer">
-      {props.routine.description} 
+    <ul>
+
+     <li> {props.routine.description} </li>
+     <li> No. of Reps {props.routine.numOfReps}</li>
+      </ul>
     </div>
     </div>
 )
@@ -26,7 +31,7 @@ export default class Viewer extends Component {
         this.state = {routines: []};
     }
 
-    componentDidMount() {
+    componentDidUpdate() {
         axios.get('http://localhost:5000/exercise/'+this.props.data)
             .then(res => {
                 this.setState({ routines: res.data })

@@ -1,45 +1,54 @@
 import React from 'react';
 import { Component } from 'react';
+import { useState } from 'react';
+import { PropTypes } from 'react'
 import axios from 'axios';
 import Preview from "./preview.component";
 import Bar from "./bar.component";
 import Viewer from "./viewer.component";
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 const Routine = props => (
+    
     <td className="display_td">
     <table>
         <tr>
-            <td><a href="#" onClick={(props.routine._id)} >{props.routine.routineName}</a></td>
+            <td className="sliderText"><div className= "sliderDiv"><a href="#" onClick={() => {props.deleteRoutine(props.routine._id)}} >{props.routine.routineName}</a></div></td>
         </tr>
         <tr>
-           <td>by</td>
+           <td>by{props.id}</td>
         </tr>
         <tr>
             <td>{props.routine.username}</td>
         </tr>
     </table>
     </td>
+
+    
     
 )
 
+
+
+
+
 export default class Displaybox extends Component {
     constructor(props) {
+
         super(props);
 
-        this.switchId = this.switchId.bind(this);
+        this.deleteRoutine = this.deleteRoutine.bind(this);
+        
 
         this.state = {
-            id:'',
+            id:"5eac5303e3ccf241840f84f6",
+            secondid:"5eac25a25484841d7046ee2d",
             routines: []
             
         };
     }
 
-   switchId(newid){
-        this.setState({
-            id: newid,
-        });
-    }
+    
 
     componentDidMount() {
         axios.get('http://localhost:5000/routines/')
@@ -51,6 +60,14 @@ export default class Displaybox extends Component {
             })
     }
 
+changeSecondid(newid){
+this.setState({secondid: newid})
+}
+
+   deleteRoutine(rid) {
+    this.setState({ id: rid})
+}
+
     routineList() {
         return this.state.routines.map(currentroutine => {
             return <Routine routine={currentroutine} deleteRoutine={this.deleteRoutine} key={currentroutine._id} />;
@@ -60,7 +77,7 @@ export default class Displaybox extends Component {
     render() {
         return(
     <div>
-            <div class="forstyle">
+            <div className="forstyle">
             <div className="displayDiv">
                 <table className="table2">
                     <tbody>
@@ -73,14 +90,18 @@ export default class Displaybox extends Component {
             </div>
                 <div className="forstyle2">
                     <div className="barDiv">
-                         <Bar data="5e9a4c4acc50bf45b4d483ea"/>
+                        <Bar data={this.state.id}/>
                     </div>
                     <div className="center">
                         <div className="left">
-                        <Preview data="5e9a4c4acc50bf45b4d483ea"/>
+                        <Preview data= {
+                            {routineid: this.state.id, 
+                             secondid: this.state.secondid,
+                            changeSecondid: this.changeSecondid.bind(this)}
+                        }/>
                         </div>
                         <div className="right">
-                        <Viewer data="5e9b407e1b673f0bf03b05d3"/>
+                        <Viewer data={this.state.secondid}/>
                         </div>
                      </div>
                 </div>

@@ -4,10 +4,10 @@ import axios from 'axios';
 
 const Routine = props => (
     <tr>
-        <td>{props.routine.routineName} </td>
+        <td className="barName"><div className="barNameDiv">{props.routine.routineName} </div></td>
         <td>by</td>
         <td>{props.routine.username}</td>
-        <td className="dis">{props.routine.description}</td>
+        <td className="dis"><div className="discriptionDiv">{props.routine.description}</div></td>
         </tr>
 )
 
@@ -15,12 +15,12 @@ export default class Bar extends Component {
     constructor(props) {
         super(props);
 
-        this.deleteRoutine = this.deleteRoutine.bind(this);
+        
 
         this.state = {routines: []};
     }
 
-    componentDidMount() {
+    componentDidUpdate() {
         axios.get('http://localhost:5000/routines/'+this.props.data)
             .then(res => {
                 this.setState({ routines: res.data })
@@ -28,17 +28,14 @@ export default class Bar extends Component {
             .catch((err) => {
                 console.log(err);
             })
+
+        
     }
-    deleteRoutine(id) {
-        axios.delete('http://localhost:5000/routines/'+id)
-            .then(res => console.log(res.data));
-        this.setState({
-            routines: this.state.routines.filter(el => el._id !== id)
-        })
-    }
+    
     routineList() {
-            return( <Routine routine= {this.state.routines} key={this.state.routines._id} />
-            )
+        return( <Routine routine= {this.state.routines}/>
+           )
+        
     }
 
     render() {

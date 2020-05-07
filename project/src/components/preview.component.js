@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 const Routine = props => (
   <tr>
-    <td>{props.routine.name}</td>
-    <td>{props.routine.description}</td>
+    <td><a href='#' onClick={() => {props.changeSecondid(props.routine._id)}} >{props.routine.name}</a></td>
+    <td><div className='previewDescription'>{props.routine.description}</div></td>
   </tr>
 );
 
@@ -16,9 +16,9 @@ export default class Preview extends Component {
     this.state = { routines: [] };
   }
 
-  componentDidMount() {
+  componentDidUpdate() {
     axios
-      .get("http://localhost:5000/exercise?name=" + 123)
+      .get('http://localhost:5000/exercise/routineID/'+ this.props.data.routineid )
       .then(res => {
         this.setState({ routines: res.data });
       })
@@ -29,7 +29,7 @@ export default class Preview extends Component {
 
   routineList() {
     return this.state.routines.map(currentroutine => {
-      return <Routine routine={currentroutine} key={currentroutine._id} />;
+      return <Routine routine={currentroutine} changeSecondid= {this.props.data.changeSecondid} key={currentroutine._id} />;
     });
   }
 
@@ -37,13 +37,11 @@ export default class Preview extends Component {
     return (
       <div className="insideleft">
         <table className="table">
-          <thead className="thead-light">
-            <tr>
+          <thead className="previewTable">
               <th>Exercises</th>
-              <th></th>
-            </tr>
+              <th> </th>
           </thead>
-          <tbody>{this.routineList()}</tbody>
+          <tbody className="previewTableBody">{this.routineList()}</tbody>
         </table>
       </div>
     );
