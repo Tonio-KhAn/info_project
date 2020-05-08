@@ -1,38 +1,37 @@
-const router = require('express').Router();
-const auth = require('../middleware/auth');
-const multer = require('multer');
-const path = require('path');
-let Exercise = require('../models/exercise.model');
+const router = require("express").Router();
+const auth = require("../middleware/auth");
+const multer = require("multer");
+const path = require("path");
+let Exercise = require("../models/exercise.model");
 
 const storage = multer.diskStorage({
-  destination: '../././public/uploads/',
-  filename: function(req, file, cb){
-  cb(null, file.fieldname + '-'+ Date.now() + path.extname(file.originalname));
-  console.log(file)
-}
+  destination: "../././public/uploads/",
+  filename: function(req, file, cb) {
+    cb(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
+  }
 });
 
-const upload = multer({storage: storage}).single('image');
+const upload = multer({ storage: storage }).single("image");
 
-router.route('/').get((req, res) => {
-    Exercise.find()
+router.route("/").get((req, res) => {
+  Exercise.find()
     .then(exercise => res.json(exercise))
-    .catch(err => res.status(400).json('Error: ' + err));
+    .catch(err => res.status(400).json("Error: " + err));
 });
 
-
-
-router.route("/add").post(auth,upload,(req, res) => {
+router.route("/add").post(upload, auth, (req, res) => {
   const routineID = req.body.routineID;
-  const name= req.body.name;
+  const name = req.body.name;
   const description = req.body.description;
   const numOfReps = req.body.numOfReps;
   const url = req.body.url;
   const date = Date.parse(req.body.date);
   const image = "uploads/" + req.file.filename;
-   
 
-  const newExercise= new Exercise({
+  const newExercise = new Exercise({
     routineID,
     name,
     description,
@@ -40,7 +39,7 @@ router.route("/add").post(auth,upload,(req, res) => {
     url,
     image,
     date
-});
+  });
 
   newExercise
     .save()
@@ -48,39 +47,38 @@ router.route("/add").post(auth,upload,(req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
-  router.route("/:id").get((req, res) => {
-    Exercise.findById(req.params.id)
-      .then(exercise => res.json(exercise))
-      .catch(err => res.status(400).json("Error: " + err));
-  });
+router.route("/:id").get((req, res) => {
+  Exercise.findById(req.params.id)
+    .then(exercise => res.json(exercise))
+    .catch(err => res.status(400).json("Error: " + err));
+});
 
-  router.route("/routineID/:id").get((req, res) => {
-    Exercise.find({"routineID": req.params.id })
-      .then(exercise => res.json(exercise))
-      .catch(err => res.status(400).json("Error: " + err));
-  });
+router.route("/routineID/:id").get((req, res) => {
+  Exercise.find({ routineID: req.params.id })
+    .then(exercise => res.json(exercise))
+    .catch(err => res.status(400).json("Error: " + err));
+});
 
+router.route("/:id").delete(auth, (req, res) => {
+  Exercise.findByIdAndDelete(req.params.id)
+    .then(() => res.json("Exercise deleted."))
+    .catch(err => res.status(400).json("Error: " + err));
+});
 
-  router.route("/:id").delete(auth, (req, res) => {
-    Exercise.findByIdAndDelete(req.params.id)
-      .then(() => res.json("Exercise deleted."))
-      .catch(err => res.status(400).json("Error: " + err));
-  });
+router.route("/update/:id").put(auth, (req, res) => {
+  Exercise.findById(req.params.id)
+    .then(exercise => {
+      exercise.username = req.body.username;
+      exercise.exerciseName = req.body.exerciseName;
+      exercise.description = req.body.description;
+      exercise.date = Date.parse(req.body.date);
 
-  router.route("/update/:id").put(auth, (req, res) => {
-    Exercise.findById(req.params.id)
-      .then(exercise => {
-        exercise.username = req.body.username;
-        exercise.exerciseName = req.body.exerciseName;
-        exercise.description = req.body.description;
-        exercise.date = Date.parse(req.body.date);
-  
-        exercise
-          .save()
-          .then(() => res.json("Exercise updated!"))
-          .catch(err => res.status(400).json("Error: " + err));
-      })
-      .catch(err => res.status(400).json("Error: " + err));
-  });
-  
-  module.exports = router;
+      exercise
+        .save()
+        .then(() => res.json("Exercise updated!"))
+        .catch(err => res.status(400).json("Error: " + err));
+    })
+    .catch(err => res.status(400).json("Error: " + err));
+});
+
+module.exports = router;

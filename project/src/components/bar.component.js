@@ -6,7 +6,7 @@ const Routine = props => (
     <tr>
         <td className="barName"><div className="barNameDiv">{props.routine.routineName} </div></td>
         <td>by</td>
-        <td>{props.routine.username}</td>
+        <td><div className="usernamebardiv">{props.routine.username}</div></td>
         <td className="dis"><div className="discriptionDiv">{props.routine.description}</div></td>
         </tr>
 )

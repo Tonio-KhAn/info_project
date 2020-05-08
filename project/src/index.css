@@ -18,49 +18,53 @@ code {
   flex-wrap: nowrap;
 }
 
-.forstyle{
-background-color: rgb(37, 36, 36);
+.forstyle {
+  background-color: rgb(37, 36, 36);
 }
 
-.displayBox{
+.displayBox {
   float: none;
 }
 
 .bar_table {
   font-size: 40px;
- }
+}
 
 .bar_table td {
   padding-right: 40px;
 }
 .dis {
   font-size: 20px;
-  padding-left: 200px;
   flex-wrap: nowrap;
   color: black;
   font-size: 18px;
 }
 
-.barNameDiv{
+.usernamebardiv{
+  width:350px;
+  max-width: 350px;
+  overflow: hidden;
+}
+.barNameDiv {
   height: 80px;
   width: 500px;
+  max-width: 500px;
   padding-top: 10px;
   overflow: hidden;
-
 }
 
-.discriptionDiv{
+.discriptionDiv {
   height: 80px;
   max-height: 80px;
   width: 240px;
-  max-width: 500;
+  max-width: 300px;
   overflow: hidden;
-
+  flex-wrap: wrap;
 }
-.barDiv{
+.barDiv {
   font-family: "Courier New", Courier, monospace;
   color: white;
-  background-image: linear-gradient(rgb(102, 94, 94),rgb(155, 153, 153));
+  background-image: linear-gradient(rgb(102, 94, 94), rgb(155, 153, 153));
   background-color: gray;
   width: 100%;
   flex-wrap: nowrap;
@@ -70,26 +74,25 @@ background-color: rgb(37, 36, 36);
   border-top-width: 1px;
   border-top-style: solid;
   border-bottom-style: ridge;
-  height:80px;
+  height: 80px;
 }
 
-.barName{
- color: white;
+.barName {
+  color: white;
 }
 
 .center {
-flex-wrap: nowrap;
-overflow: hidden;
-max-height: 560px;
-background-color:white;
-border-color: rgb(0, 0, 0);
-border-style: solid;
-border-width: 30px;
-
+  flex-wrap: nowrap;
+  overflow: hidden;
+  max-height: 560px;
+  background-color: white;
+  border-color: rgb(0, 0, 0);
+  border-style: solid;
+  border-width: 30px;
 }
 .display_td {
   background-color: whitesmoke;
-  background-image: linear-gradient(white,rgb(190, 190, 190));
+  background-image: linear-gradient(white, rgb(190, 190, 190));
   text-transform: capitalize;
   border-color: rgb(37, 36, 36);
   border-style: solid;
@@ -116,16 +119,15 @@ border-width: 30px;
   background-color: white;
 }
 
-.insideleft{
+.insideleft {
   height: 500px;
   max-height: 500px;
 }
-.right{
+.right {
   float: right;
   width: 818px;
   height: 500px;
   background-color: black;
-  
 }
 
 .display_td a:link {
@@ -137,62 +139,60 @@ border-width: 30px;
   font-size: 18px;
 }
 
-.topviewer{
+.topviewer {
   width: inherit;
   text-align: center;
   font-size: 60px;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
   color: white;
   border-top-width: 5px;
-  background-image: linear-gradient(rgb(37, 36, 36),rgb(53, 51, 51));
+  background-image: linear-gradient(rgb(37, 36, 36), rgb(53, 51, 51));
   border-bottom-color: rgba(53, 51, 51);
   border-bottom-style: solid;
   border-bottom-width: 1px;
 }
 
-.imageholder{
+.imageholder {
   padding-left: 220px;
   width: inherit;
   background-color: black;
 }
 
-.viewerDiv{
+.viewerDiv {
   background-color: rgb(37, 36, 36);
   width: inherit;
   color: white;
 }
-.imageviewer{
+.imageviewer {
   width: 400px;
   height: 300px;
   background-color: white;
   float: unset;
 }
 
-.image{
+.image {
   width: 400px;
   height: 300px;
-
 }
 
-.table2{
+.table2 {
   border-color: rgb(37, 36, 36);
   border-style: solid;
   border-width: 10px;
   height: 150px;
 }
 
-.forstyle2{
+.forstyle2 {
   flex-wrap: nowrap;
-
 }
 
-.overflowing{
-  overflow:hidden;
+.overflowing {
+  overflow: hidden;
   max-width: 300px;
 }
 
-.sliderText{
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+.sliderText {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   width: 200px;
   max-width: 200px;
   height: 40px;
@@ -200,58 +200,55 @@ border-width: 30px;
   border-block-end-color: black;
   border-block-end-style: solid;
   border-block-end-width: thin;
-  
-
 }
 
-.sliderDiv{
+.sliderDiv {
   width: 200px;
   max-width: 200px;
   height: 40px;
   max-height: 40px;
   overflow: hidden;
-
 }
 
 .previewTable {
-  background-color:  rgb(37, 36, 36);
+  background-color: rgb(37, 36, 36);
 }
 
 .previewTable th {
-  background-color:  rgb(37, 36, 36);
+  background-color: rgb(37, 36, 36);
   height: 92px;
-  background-image: linear-gradient(rgb(37, 36, 36),rgb(53, 51, 51));
+  background-image: linear-gradient(rgb(37, 36, 36), rgb(53, 51, 51));
   color: white;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
   font-size: 30px;
   text-transform: capitalize;
 }
 
-.previewTableBody{
+.previewTableBody {
   font-size: 20px;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
   text-transform: capitalize;
 }
 
-.previewDescription{
+.previewDescription {
   font-size: 15px;
   max-height: 100px;
   overflow: hidden;
 }
 
-.bottomviewer{
+.bottomviewer {
   height: 200px;
   max-height: 200px;
   overflow: scroll;
 }
 
-.spanLogin{
+.spanLogin {
   text-align: center;
   margin-left: 400px;
 }
 
-.centerLogin{
-  background-color:white;
+.centerLogin {
+  background-color: white;
   padding-left: 350px;
   height: 600px;
   padding-top: 50px;
@@ -260,37 +257,35 @@ border-width: 30px;
   background-size: cover;
 }
 
-.divLogin{
-  background-color:rgba(67, 113, 151, 0.473);
+.divLogin {
+  background-color: rgba(67, 113, 151, 0.473);
   width: 400px;
   height: 500px;
   border-radius: 20px;
   border-color: rgba(255, 255, 255, 0.137);
   border-style: solid;
   border-width: 2px;
-  font-size:40px;
+  font-size: 40px;
   color: white;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
   text-transform: capitalize;
 }
 
-.loginForm{
-  font-size:20px;
+.loginForm {
+  font-size: 20px;
   padding: 20px;
 }
 
-
-.loginButton{
+.loginButton {
   width: 150px;
   height: 50px;
   border-radius: 10px;
-
 }
 
-.welcome{
+.welcome {
   padding-top: 5px;
   padding-left: 140px;
   color: white;
   font-size: 20px;
   font-family: "Courier New", Courier, monospace;
-} 
+}

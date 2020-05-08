@@ -10,7 +10,7 @@ router.route('/user').get(auth, (req, res) => {
     User.findById(req.user.id)
     .select('-password')
     .then(user => res.json(user))
-    .catch(err => res.status(400).json('Error: ' + err));
+    .catch(err => res.status(400).json('msg: ' + err));
 });
 
 
@@ -51,7 +51,7 @@ router.route("/add").post((req, res) => {
                     username: user.username
                 }
             })
-                .catch(err => res.status(400).json("Error: " + err));
+            .catch(err => res.status(400).json("msg: " + err));
             }
         )
 
@@ -71,7 +71,7 @@ router.route("/login").post((req, res) => {
     User.findOne({username})
     .then(user => {
         if(!user) return res.status(400).json(
-            {msg: 'User with same username does not exist'}
+            {msg: 'User does not exist'}
         );
     bcrypt.compare(password, user.password)
             .then(isMatch =>{

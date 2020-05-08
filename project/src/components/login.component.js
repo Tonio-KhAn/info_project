@@ -4,6 +4,7 @@ import axios from 'axios';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {login} from '../actions/authActions';
+import { Redirect } from 'react-router';
 
 
 class RoutinesList extends Component {
@@ -16,7 +17,8 @@ class RoutinesList extends Component {
 
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            redirect : false
         }
     }
 
@@ -29,6 +31,7 @@ class RoutinesList extends Component {
     componentDidUpdate(prevProps){
         const {isAuthenicated} = this.props;
         if (isAuthenicated){
+            this.setState({redirect: true});
         }
     }
  
@@ -50,15 +53,18 @@ class RoutinesList extends Component {
             password: this.state.password
         }
         this.props.login(user);
-            
         
-
         console.log(user);
         
     }
     
     render() {
-        return (
+        
+            if (this.state.redirect) {
+                return <Redirect push to="/" />;
+                }
+            
+                return(
             <span className="spanLogin">
             <div className= "centerLogin">
                <div className= "divLogin">
@@ -96,7 +102,9 @@ class RoutinesList extends Component {
                </div>
             </div>    
             </span>
+    
         );
+        
     }
 }
 

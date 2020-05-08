@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {register} from '../actions/authActions';
 import { create } from 'domain';
+import { Redirect } from 'react-router';
 
 class CreateUser extends Component {
     constructor(props) {
@@ -18,7 +19,8 @@ class CreateUser extends Component {
             username: '',
             email: '',
             password: '',
-            msg: null
+            msg: null,
+            redirect : false
         }
     }
 
@@ -31,7 +33,7 @@ class CreateUser extends Component {
     componentDidUpdate(prevProps){
         const {isAuthenticated} = this.props;
         if (isAuthenticated){
-            window.location = '';
+            this.setState({redirect: true});
         }
     }
 
@@ -67,6 +69,10 @@ class CreateUser extends Component {
     }
 
     render() {
+        if (this.state.redirect) {
+            return <Redirect push to="/" />;
+            }
+        
         return (
             <div>
                 <h3>Create New User</h3>
