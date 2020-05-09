@@ -5,7 +5,7 @@ const path = require("path");
 let Exercise = require("../models/exercise.model");
 
 const storage = multer.diskStorage({
-  destination: "../././public/uploads/",
+  destination: "../././client/public/uploads/",
   filename: function(req, file, cb) {
     cb(
       null,
